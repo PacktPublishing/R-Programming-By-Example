@@ -1,0 +1,8 @@
+
+# Data Simulation
+
+<!-- ```{r output.lines = 4, echo = FALSE} -->
+<!-- ``` -->
+
+<!-- ```{r region-frequency, fig.cap = "Vote Proportion by Region", fig.show = "hold", out.width = "32%"} -->
+<!-- ``` -->

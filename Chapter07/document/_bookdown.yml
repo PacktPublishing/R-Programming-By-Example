@@ -1,0 +1,15 @@
+
+title:  "Technical Document"
+author: "The Food Factory"
+date:   "`r Sys.Date()`"
+
+new_session: yes
+
+rmd_files: [
+  "01-overview.Rmd",
+  "02-data-simulation.Rmd",
+  "03-data-visualizations.Rmd",
+  "04-text-analysis.Rmd"
+]
+
+before_chapter_script: "shared.R"

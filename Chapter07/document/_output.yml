@@ -1,0 +1,12 @@
+
+bookdown::pdf_book:
+  keep_tex: yes
+
+bookdown::gitbook:
+  config:
+    toc:
+      collapse: section
+      before: |
+        <li><strong><a href="./">R Programming by Example</a></strong></li>
+    toolbar:
+      position: static

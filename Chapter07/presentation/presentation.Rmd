@@ -1,0 +1,132 @@
+---
+title:  "The Food Factory"
+author: "Weekly Update"
+date:   "`r Sys.Date()`"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, out.width = '100%')
+```
+
+```{r load-functions-and-data, include=FALSE}
+source("../functions.R")
+source("../../chapter-05/functions.R")
+source ("../../chapter-06/functions.R")
+
+all_time  <- readRDS("../../chapter-04/results/sales.rds")
+max_date  <- max(all_time$DATE)
+this_week <- filter_n_days_back(all_time, 7, max_date)
+last_week <- filter_n_days_back(all_time, 7, max_date - 7)
+
+quantity_all   <- proportions_table(all_time, "QUANTITY")
+continent_all  <- proportions_table(all_time, "CONTINENT")
+protein_all    <- proportions_table(all_time, "PROTEIN_SOURCE")
+
+quantity_last  <- proportions_table(last_week, "QUANTITY")
+continent_last <- proportions_table(last_week, "CONTINENT")
+protein_last   <- proportions_table(last_week, "PROTEIN_SOURCE")
+
+quantity_this  <- proportions_table(this_week, "QUANTITY")
+continent_this <- proportions_table(this_week, "CONTINENT")
+protein_this   <- proportions_table(this_week, "PROTEIN_SOURCE")
+
+sales           <- readRDS("../../chapter-04/results/sales.rds")
+client_messages <- readRDS("../../chapter-04/results/client_messages.rds")
+sales           <- add_profits(sales)
+```
+
+## Changes in quantity (1/2)
+
+```{r quantity-bars, fig.height = 2.5}
+difference_bars(quantity_last, quantity_this, "This week", "Last week")
+difference_bars(quantity_all, quantity_this, "This week", "All-time")
+```
+
+## Changes in quantity (2/2)
+
+```{r quantity-lines, out.width = '50%', fig.height = 10}
+change_lines(quantity_last, quantity_this, "This week", "Last week", 0.2)
+change_lines(quantity_all, quantity_this, "This week", "All-time", 0.2)
+```
+
+## Changes in continent (1/2)
+
+```{r continent-bars, fig.height = 2.5}
+difference_bars(continent_last, continent_this, "This week", "Last week")
+difference_bars(continent_all, continent_this, "This week", "All-time")
+```
+
+## Changes in continent (2/2)
+
+```{r continent-lines, out.width = '50%', fig.height = 10}
+change_lines(continent_last, continent_this, "This week", "Last week", 0.3)
+change_lines(continent_all, continent_this, "This week", "All-time", 0.3)
+```
+
+## Changes in protein source (1/2)
+
+```{r protein-source-bars, fig.height = 2.5}
+difference_bars(protein_last, protein_this, "This week", "Last week")
+difference_bars(protein_all, protein_this, "This week", "All-time")
+```
+
+## Changes in protein source (2/2)
+
+```{r protein-source-lines, out.width = '50%', fig.height = 10}
+change_lines(protein_last, protein_this, "This week", "Last week", 0.5)
+change_lines(protein_all, protein_this, "This week", "All-time", 0.5)
+```
+
+## Profit ratio vs continent
+
+```{r sales-proft-ratio-by-continent-and-protein-source }
+graph_bars(sales, "CONTINENT", "PROFIT_RATIO", "PROTEIN_SOURCE")
+```
+
+## Cost vs price
+
+```{r price-vs-cost}
+graph_marginal_distributions(sales, "COST", "PRICE", "PROTEIN_SOURCE", "CONTINENT")
+```
+
+## Price vs profit
+
+```{r price-vs-profit-ratio}
+graph_marginal_distributions(sales, "PRICE", "PROFIT_RATIO", "PROTEIN_SOURCE", "CONTINENT")
+```
+
+## Historic pricing
+
+```{r date-vs-frequency-profit-and-profit-ratio, out.width = "100%", fig.height = 1.8}
+graph_last_n_days(sales, 30, color = "PROTEIN_SOURCE")
+graph_last_n_days(sales, 30, "PROFIT", "PROTEIN_SOURCE")
+graph_last_n_days(sales, 30, "PROFIT_RATIO", "PROTEIN_SOURCE")
+```
+
+## Top 5 customers' preferences
+
+```{r top-customers-preferences}
+subset <- filter_data(sales, 30, 5, "CLIENT_ID")
+graph_radar(subset, "CLIENT_ID")
+```
+
+## Customer messages geolocations
+
+```{r customers-dynamic-map}
+graph_client_messages_interactive(client_messages, sales)
+```
+
+## Latest messages from Twitter
+
+```{r twitter-setup, include = FALSE}
+consumer_key    <- "b9SGfRpz4b1rnHFtN2HtiQ9xl"
+consumer_secret <- "YMifSUmCJ4dlgB8RVxKRNcTLQw7Y4IBwDwBRkdz2Va1vcQjOP0"
+access_token    <- "171370802-RTl4RBpMDaSFdVf5q9xrSWQKxtae4Wi3y76Ka4Lz"
+access_secret   <- "dHfbMtmpeA2QdOH5cYPXO5b4hF8Nj6LjxELfOMSwHoUB8"
+setup_twitter_oauth(consumer_key, consumer_secret, access_token, access_secret)
+```
+
+```{r twitter-live-data, size = "footnotesize", comment = ""}
+format_tweets(get_twitter_data("The Food Factory", 5))
+```
