@@ -36,3 +36,7 @@ There are two types of requirements you need to be able to execute all the code 
 * [Getting Started with Deep Learning with R [Integrated Course]](https://www.packtpub.com/application-development/getting-started-deep-learning-r-integrated-course?utm_source=github&utm_medium=repository&utm_campaign=9781788399029)
 
 * [Modern R Programming Cookbook](https://www.packtpub.com/application-development/modern-r-programming-cookbook?utm_source=github&utm_medium=repository&utm_campaign=9781787129054)
+### Download a free PDF
+
+ <i>If you have already purchased a print or Kindle version of this book, you can get a DRM-free PDF version at no cost.<br>Simply click on the link to claim your free PDF.</i>
+<p align="center"> <a href="https://packt.link/free-ebook/9781788292542">https://packt.link/free-ebook/9781788292542 </a> </p>
